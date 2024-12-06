@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Creon Calculator</title>
+
+    <style>
+
+        body {
+
+            font-family: Arial, sans-serif;
+
+            margin: 40px;
+
+            background-color: #f4f4f9;
+
+            text-align: center;
+
+        }
+
+        h1 {
+
+            color: #333;
+
+        }
+
+        .container {
+
+            max-width: 400px;
+
+            margin: 0 auto;
+
+            padding: 20px;
+
+            background-color: #fff;
+
+            border-radius: 8px;
+
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+
+        }
+
+        input, button {
+
+            padding: 10px;
+
+            margin: 10px;
+
+            width: 100%;
+
+            box-sizing: border-box;
+
+            font-size: 16px;
+
+        }
+
+        button {
+
+            cursor: pointer;
+
+            background-color: #4CAF50;
+
+            color: white;
+
+            border: none;
+
+        }
+
+        button:hover {
+
+            background-color: #45a049;
+
+        }
+
+        .result {
+
+            margin-top: 20px;
+
+            font-size: 18px;
+
+            font-weight: bold;
+
+        }
+
+        .result-section {
+
+            margin-top: 10px;
+
+            font-size: 16px;
+
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+
+
+    <div class="container">
+
+        <h1>Creon Calculator</h1>
+
+        <p>Enter the amounts of carbohydrates, fats, and protein (in grams) to calculate the required Creon capsules.</p>
+
+
+
+        <input type="number" id="carbs" placeholder="Enter carbohydrates (grams)" />
+
+        <input type="number" id="fats" placeholder="Enter fats (grams)" />
+
+        <input type="number" id="protein" placeholder="Enter protein (grams)" />
+
+        <button onclick="calculateCreon()">Calculate Creon Capsules</button>
+
+
+
+        <div class="result" id="result"></div>
+
+        <div id="result-carbs" class="result-section"></div>
+
+        <div id="result-fats" class="result-section"></div>
+
+        <div id="result-protein" class="result-section"></div>
+
+    </div>
+
+
+
+    <script>
+
+        function calculateCreon() {
+
+            const carbs = parseFloat(document.getElementById('carbs').value);
+
+            const fats = parseFloat(document.getElementById('fats').value);
+
+            const protein = parseFloat(document.getElementById('protein').value);
+
+
+
+            // Ensure valid inputs
+
+            if (isNaN(carbs) || carbs < 0 || isNaN(fats) || fats < 0 || isNaN(protein) || protein < 0) {
+
+                document.getElementById('result').innerText = 'Please enter valid numbers for all fields.';
+
+                document.getElementById('result-carbs').innerText = '';
+
+                document.getElementById('result-fats').innerText = '';
+
+                document.getElementById('result-protein').innerText = '';
+
+                return;
+
+            }
+
+
+
+            // Enzyme requirements
+
+            const amylasePerGramCarb = 10000; // IU for carbohydrates
+
+            const lipasePerGramFat = 2000;    // IU for fats
+
+            const proteasePerGramProtein = 4000; // IU for protein
+
+
+
+            // Creon capsule content
+
+            const lipasePerCapsule = 25000;   // IU
+
+            const amylasePerCapsule = 18000; // IU
+
+            const proteasePerCapsule = 1000; // IU
+
+
+
+            // Calculate enzyme requirements
+
+            const amylaseNeeded = carbs * amylasePerGramCarb;
+
+            const lipaseNeeded = fats * lipasePerGramFat;
+
+            const proteaseNeeded = protein * proteasePerGramProtein;
+
+
+
+            // Calculate number of capsules required
+
+            const capsulesForAmylase = amylaseNeeded / amylasePerCapsule;
+
+            const capsulesForLipase = lipaseNeeded / lipasePerCapsule;
+
+            const capsulesForProtease = proteaseNeeded / proteasePerCapsule;
+
+
+
+            // Round up to the nearest whole number for each
+
+            const roundedCapsulesForAmylase = Math.ceil(capsulesForAmylase);
+
+            const roundedCapsulesForLipase = Math.ceil(capsulesForLipase);
+
+            const roundedCapsulesForProtease = Math.ceil(capsulesForProtease);
+
+
+
+            // Display the results
+
+            document.getElementById('result').innerText = 'Creon 25,000 capsules required:';
+
+            document.getElementById('result-carbs').innerText = `For Carbohydrates: ${roundedCapsulesForAmylase} capsule(s)`;
+
+            document.getElementById('result-fats').innerText = `For Fats: ${roundedCapsulesForLipase} capsule(s)`;
+
+            document.getElementById('result-protein').innerText = `For Protein: ${roundedCapsulesForProtease} capsule(s)`;
+
+        }
+
+    </script>
+
+
+
+</body>
+
+</html>
